@@ -1,63 +1,62 @@
-# Stock-Market-Predictor
+# Stock Price Predictor
 
-## Installation Guidelines
+## Project Overview
 
-Follow these guidelines to set up the Stock-Market-Predictor project on your local machine.
+Stock Price Predictor is a project aimed at predicting stock prices using Long Short-Term Memory (LSTM) neural networks and machine learning techniques. The project provides two types of visualizations: one through a Jupyter Notebook and another through a web application created with Flask. These visualizations allow users to explore the stock price prediction model and observe the results using tables and charts.
+
+# 
+
+## Jupyter Notebook Visualization
 
 ### Prerequisites
 
-Before you begin, ensure that you have the following software and tools installed:
+To run the Jupyter Notebook visualization, you need to have Python installed. The required libraries can be installed using the `requirements.txt` file.
 
-- Python (3.7 or higher)
-- pip (Python package manager)
-- Jupyter Notebook (optional but recommended for data exploration)
-- Git (for cloning the repository)
+1. Clone the repository to your local machine.
 
-### Clone the Repository
+2. Install the required libraries:
+   ```bash
+   pip3 install -r requirements.txt
+   ```
 
-```bash
-git clone https://github.com/Deep4GB/Stock-Market-Predictor.git
-cd Stock-Market-Predictor
-```
+Open and run the Jupyter Notebook, which provides a step-by-step breakdown of the project, including data collection, preprocessing, model training, prediction, and data visualization.
 
-### Problem Statement
+# 
 
-Stock price prediction is a challenging task that involves analyzing historical stock data to forecast future prices. Accurate stock price predictions can have significant financial implications for investors and traders. The problem lies in developing a reliable model that can predict stock prices with high accuracy.
+## Flask Web Application Visualization
 
-### Objective
+### Prerequisites
+To run the Flask web application, you need to have Python installed. The required libraries can be installed using the requirements.txt file.
 
-Our objective is to create a stock price prediction model using Long Short-Term Memory (LSTM) neural networks and machine learning techniques. We aim to provide accurate predictions for various stocks based on historical data, ultimately helping users make informed investment decisions.
+1. Install the required libraries:
+   ```bash
+   pip3 install -r requirements.txt
+   ```
+2. Run the Flask application:
+   ```bash
+   python3 app.py
+   ```
+3. Open a web browser and navigate to http://localhost:5000 to access the web application.
 
-### Motivation
+# 
 
-The motivation behind this project is the potential financial impact of accurate stock price predictions. Investors and traders often rely on predictions to make informed decisions. By leveraging advanced machine learning models, we aim to improve prediction accuracy and provide users with valuable insights.
+## Usage
 
-### Related Work
+### Jupyter Notebook Visualization
+1. Open and run the Jupyter Notebook, which will guide you through the process of stock price prediction using LSTM models.
+2. Explore the step-by-step code cells to understand data collection, preprocessing, model training, and predictions.
+3. Observe the results through data tables and visual charts.
 
-Previous research has shown that LSTM models are effective in capturing temporal dependencies in stock data. We will build upon this research by enhancing the model's accuracy and generalization capabilities.
+### Flask Web Application Visualization
+1. Run the Flask application using the steps mentioned above.
+2. Access the web application through your web browser.
+3. Enter a stock ticker symbol and click "Predict" to view the predicted stock price.
+4. Observe the predicted price and a chart representing the predicted and actual prices.
 
-### Framework
+#
 
-**Framework:**
+## Contribute
 
-Our framework for stock price prediction is comprehensive and designed to deliver accurate results. It leverages several powerful tools and libraries, ensuring that the model is built on a solid foundation.
+    Feel free to contribute to the project by opening issues, suggesting improvements, or creating pull requests. We hope you find this project informative and useful for exploring stock price prediction. Enjoy the visualizations!
 
-1. **TensorFlow:**
-   - TensorFlow, an open-source machine learning framework, will be at the core of our project. It is highly versatile and well-suited for developing deep learning models, particularly Long Short-Term Memory (LSTM) networks. LSTM networks are pivotal in capturing temporal dependencies within stock data.
-
-2. **scikit-learn:**
-   - To complement the deep learning capabilities of TensorFlow, we'll be incorporating scikit-learn, a renowned machine learning library. scikit-learn offers a wide range of machine learning techniques that can enhance the predictive power of our models. It provides tools for classification, regression, clustering, and dimensionality reduction, among others.
-
-3. **Pandas:**
-   - Efficient data handling and preprocessing are essential components of our framework. Pandas, a powerful data manipulation library, will play a central role. It allows us to efficiently load, manipulate, and preprocess large datasets. This includes data cleaning, feature selection, and transformation to ensure that our models receive the highest quality data.
-
-**Key Framework Components:**
-
-- **Data Collection:**
-  - This initial stage involves the collection of historical stock data. We'll gather comprehensive datasets, including factors such as daily stock prices, trading volumes, and other relevant financial indicators. We will use the Yahoo Finance API to retrieve up-to-date information.
-
-- **Data Preprocessing:**
-  - Data preprocessing is a crucial phase that ensures the data is in the best possible state for analysis and modeling. We will perform tasks such as handling missing data, normalization, and feature engineering to prepare the data for model training.
-
-- **Model Training:**
-  - The heart of our framework, this step involves building and training LSTM models using TensorFlow. The LSTM architecture excels in capturing patterns and dependencies in sequential data, making it an excellent choice for modeling stock prices. We will also explore different machine learning techniques from scikit-learn to complement our LSTM models.
+Team - Deep, Dravya, Sahil
