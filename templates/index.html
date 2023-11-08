@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Price Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-md p-6 bg-gray-800 rounded-lg">
+        <h1 class="text-3xl font-semibold text-center mb-6">Stock Price Prediction</h1>
+        <form method="POST" action="/predict" class="space-y-4">
+            <div class="flex flex-col space-y-2">
+                <label for="ticker" class="text-sm">Enter Stock Ticker:</label>
+                <input type="text" name="ticker" required class="bg-gray-700 border rounded p-2">
+            </div>
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-full transition duration-300 w-full">
+                Predict
+            </button>
+        </form>
+    </div>
+</body>
+</html>
