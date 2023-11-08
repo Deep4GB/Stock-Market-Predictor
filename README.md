@@ -57,6 +57,6 @@ To run the Flask web application, you need to have Python installed. The require
 
 ## Contribute
 
-    Feel free to contribute to the project by opening issues, suggesting improvements, or creating pull requests. We hope you find this project informative and useful for exploring stock price prediction. Enjoy the visualizations!
+Feel free to contribute to the project by opening issues, suggesting improvements, or creating pull requests. We hope you find this project informative and useful for exploring stock price prediction. Enjoy the visualizations!
 
 Team - Deep, Dravya, Sahil
