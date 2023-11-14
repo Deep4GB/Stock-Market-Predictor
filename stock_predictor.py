@@ -71,11 +71,9 @@ def predict_price(model, last_date, scaler, open_price, high_price, low_price, v
     input_data_scaled = scaler.transform(input_data)
     return model.predict(input_data_scaled)[0]
 
-# ... (previous code)
 
 # Streamlit UI
 def main():
-    st.title("Stock Price Predictor")
 
     # Sidebar for user input
     st.sidebar.header("User Input")
@@ -94,52 +92,9 @@ def main():
     model, X_test, y_test, scaler = train_model(processed_data)
 
     # User Interface
-    st.header(f"Stock Closing Price Predictor for {symbol}")
+    st.title(f"Stock Closing Price Predictor for {symbol}")
 
-    # Plot historical stock data
-    st.subheader("Historical Stock Data")
-    st.line_chart(stock_data['Close'])
-    st.write("""
-        This chart displays the historical closing prices of the selected stock over the specified time period.
-    """)
-
-    # Additional Time Series Analysis
-    st.subheader("Time Series Analysis")
-
-    # Plot Moving Average
-    plt.figure(figsize=(10, 4))
-    plt.plot(processed_data.index, processed_data['Close'], label="Closing Price", marker='o', linestyle='-')
-    plt.plot(processed_data.index, processed_data['MA'], label=f"Moving Average ({ma_window} days)", linestyle='--', color='orange')
-    plt.xlabel("Date")
-    plt.ylabel("Price")
-    plt.title("Closing Price and Moving Average")
-    plt.legend()
-    st.pyplot(plt)
-    st.write("""
-        This chart shows the closing price of the stock along with a smoothed line called the Moving Average (MA).
-        The MA helps to identify trends by reducing short-term fluctuations.
-    """)
-
-    # Plot Daily Price Changes
-    st.subheader("Daily Price Changes")
-    daily_changes = stock_data['Close'].pct_change()
-    st.line_chart(daily_changes)
-    st.write("""
-        This chart illustrates the daily percentage changes in the closing prices of the stock. 
-        It provides insights into the volatility and direction of price movements.
-    """)
-
-    # Plot Rolling Volatility
-    st.subheader("Rolling Volatility")
-    volatility_window = st.slider("Volatility Window", min_value=1, max_value=30, value=10)
-    rolling_volatility = daily_changes.rolling(window=volatility_window).std()
-    st.line_chart(rolling_volatility)
-    st.write("""
-        This chart displays the rolling volatility, which represents the degree of variation in daily price changes. 
-        A higher rolling volatility indicates increased market uncertainty.
-    """)
-
-    # Add more visualizations and analysis as needed
+    st.markdown("---")
 
     # Prediction
     last_date = stock_data.index[-1].to_pydatetime().date()
@@ -158,6 +113,61 @@ def main():
         The above value represents the predicted closing price for the next day, based on the trained model.
         The value is highlighted for emphasis.
     """)
+
+    st.markdown("---")
+
+    # Plot historical stock data
+    st.subheader("Historical Stock Data")
+    st.line_chart(stock_data['Close'])
+    st.write("""
+        This chart displays the historical closing prices of the selected stock over the specified time period.
+    """)
+
+    st.markdown("---")
+
+    # Additional Time Series Analysis
+    st.subheader("Time Series Analysis")
+
+    # Plot Moving Average
+    plt.figure(figsize=(10, 4))
+    plt.plot(processed_data.index, processed_data['Close'], label="Closing Price", marker='o', linestyle='-')
+    plt.plot(processed_data.index, processed_data['MA'], label=f"Moving Average ({ma_window} days)", linestyle='--', color='orange')
+    plt.xlabel("Date")
+    plt.ylabel("Price")
+    plt.title("Closing Price and Moving Average")
+    plt.legend()
+    st.pyplot(plt)
+    st.write("""
+        This chart shows the closing price of the stock along with a smoothed line called the Moving Average (MA).
+        The MA helps to identify trends by reducing short-term fluctuations.
+    """)
+
+    st.markdown("---")
+
+
+    # Plot Daily Price Changes
+    st.subheader("Daily Price Changes")
+    daily_changes = stock_data['Close'].pct_change()
+    st.line_chart(daily_changes)
+    st.write("""
+        This chart illustrates the daily percentage changes in the closing prices of the stock. 
+        It provides insights into the volatility and direction of price movements.
+    """)
+
+    st.markdown("---")
+
+
+    # Plot Rolling Volatility
+    st.subheader("Rolling Volatility")
+    volatility_window = st.slider("Volatility Window", min_value=1, max_value=30, value=10)
+    rolling_volatility = daily_changes.rolling(window=volatility_window).std()
+    st.line_chart(rolling_volatility)
+    st.write("""
+        This chart displays the rolling volatility, which represents the degree of variation in daily price changes. 
+        A higher rolling volatility indicates increased market uncertainty.
+    """)
+
+    st.markdown("---")
 
 
     # Plot actual vs predicted closing prices with thinner lines
