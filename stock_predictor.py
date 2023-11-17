@@ -46,8 +46,6 @@ def preprocess_data(data, ma_window):
 
     return data
 
-
-
 # Function to train a Random Forest Regressor model
 def train_model(data):
     X = data[['Date', 'Open', 'High', 'Low', 'Volume', 'MA']]
@@ -105,14 +103,59 @@ def main():
     volume = stock_data['Volume'].iloc[-1]
 
     next_price = predict_price(model, last_date, scaler, open_price, high_price, low_price, volume)
+    
+    # Get the current day's closing price
+    current_close_price = stock_data['Close'].iloc[-1]
 
-    # Highlight the predicted closing price
+    # Determine the color of the arrow based on predicted movement
+    if next_price > current_close_price:
+        arrow_color = 'green'  # Upward movement
+    elif next_price < current_close_price:
+        arrow_color = 'red'  # Downward movement
+    else:
+        arrow_color = 'black'  # No change
+
+    # Display the arrow indicating the predicted movement
+    arrow_html = f'<span style="color:{arrow_color}; font-size: 24px">&#8593;</span>' if arrow_color == 'green' else f'<span style="color:{arrow_color}; font-size: 24px">&#8595;</span>'
+
+    # Display the predicted closing price and the directional arrow as a subheader
     next_date_str = next_date.strftime("%Y-%m-%d")
-    st.subheader(f"The predicted closing price for {next_date_str} is: **{next_price:.2f}**")
+    prediction_text = f"### The predicted closing price for {next_date_str} is: **${next_price:.2f}** {arrow_html}"
+    st.markdown(prediction_text, unsafe_allow_html=True)
+
     st.write("""
         The above value represents the predicted closing price for the next day, based on the trained model.
         The value is highlighted for emphasis.
     """)
+
+    st.markdown("---")
+
+    # Plot actual vs predicted closing prices with thinner lines
+    st.subheader("Actual vs Predicted Closing Prices")
+    plt.figure(figsize=(10, 8))
+
+    # Plot predicted closing prices with thinner line
+    predicted_prices = [predict_price(model, date.date(), scaler, stock_data['Open'].loc[date],
+                                      stock_data['High'].loc[date], stock_data['Low'].loc[date],
+                                      stock_data['Volume'].loc[date]) for date in processed_data.index]
+
+    # Plot actual vs predicted closing prices
+    fig_actual_vs_predicted = go.Figure()
+
+    # Plot historical closing prices in blue
+    fig_actual_vs_predicted.add_trace(go.Scatter(x=processed_data.index, y=processed_data['Close'], mode='lines', name='Historical Closing Price', line=dict(color='blue')))
+
+    # Plot predicted closing prices in red
+    fig_actual_vs_predicted.add_trace(go.Scatter(x=processed_data.index, y=predicted_prices, mode='lines', name='Predicted Closing Price', line=dict(color='red')))
+
+    # Customize layout
+    fig_actual_vs_predicted.update_layout(
+        xaxis_title='Date',
+        yaxis_title='Closing Price',
+    )
+
+    # Display the plot
+    st.plotly_chart(fig_actual_vs_predicted)
 
     st.markdown("---")
 
@@ -169,36 +212,6 @@ def main():
 
     st.markdown("---")
 
-
-    # Plot actual vs predicted closing prices with thinner lines
-    st.subheader("Actual vs Predicted Closing Prices")
-    plt.figure(figsize=(10, 8))
-
-    # Plot predicted closing prices with thinner line
-    predicted_prices = [predict_price(model, date.date(), scaler, stock_data['Open'].loc[date],
-                                      stock_data['High'].loc[date], stock_data['Low'].loc[date],
-                                      stock_data['Volume'].loc[date]) for date in processed_data.index]
-
-    # Plot actual vs predicted closing prices
-    fig_actual_vs_predicted = go.Figure()
-
-    # Plot historical closing prices in blue
-    fig_actual_vs_predicted.add_trace(go.Scatter(x=processed_data.index, y=processed_data['Close'], mode='lines', name='Historical Closing Price', line=dict(color='blue')))
-
-    # Plot predicted closing prices in red
-    fig_actual_vs_predicted.add_trace(go.Scatter(x=processed_data.index, y=predicted_prices, mode='lines', name='Predicted Closing Price', line=dict(color='red')))
-
-    # Customize layout
-    fig_actual_vs_predicted.update_layout(
-        xaxis_title='Date',
-        yaxis_title='Closing Price',
-    )
-
-    # Display the plot
-    st.plotly_chart(fig_actual_vs_predicted)
-
-    st.markdown("---")
-
     # Display key components with a line separator
     st.subheader("Key Components")
     st.write("""
@@ -207,7 +220,12 @@ def main():
         - **Data Mining Techniques**: Historical stock data retrieval from Yahoo Finance, feature engineering (e.g., moving average), and scaling for model training.
     """)
 
-
+    st.markdown("---")
+    
+    st.subheader("Team Members:")
+    st.write("- Deep Patel")
+    st.write("- Dravya Patel")
+    st.write("- Sahil Patel")
 
 if __name__ == "__main__":
     main()
