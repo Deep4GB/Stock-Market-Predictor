@@ -1,60 +1,41 @@
 # Stock Price Predictor
 
 ## Project Overview
+The Stock Price Predictor project offers a user-friendly interface for stock price prediction and analysis. It employs two distinct methodologies represented by Jupyter Notebooks and a Streamlit-based application utilizing machine learning techniques.
 
-Stock Price Predictor is a project aimed at predicting stock prices using Long Short-Term Memory (LSTM) neural networks and machine learning techniques. The project provides two types of visualizations: one through a Jupyter Notebook and another through a web application created with Flask. These visualizations allow users to explore the stock price prediction model and observe the results using tables and charts.
-
-# 
-
-## Jupyter Notebook Visualization
-
-### Prerequisites
-
-To run the Jupyter Notebook visualization, you need to have Python installed. The required libraries can be installed using the `requirements.txt` file.
-
-1. Clone the repository to your local machine.
-
-2. Install the required libraries:
-   ```bash
-   pip3 install -r requirements.txt
-   ```
-
-Open and run the Jupyter Notebook, which provides a step-by-step breakdown of the project, including data collection, preprocessing, model training, prediction, and data visualization.
 
 # 
 
-## Flask Web Application Visualization
+# Instructions to run
 
-### Prerequisites
-To run the Flask web application, you need to have Python installed. The required libraries can be installed using the requirements.txt file.
-
-1. Install the required libraries:
-   ```bash
-   pip3 install -r requirements.txt
-   ```
-2. Run the Flask application:
-   ```bash
-   python3 app.py
-   ```
-3. Open a web browser and navigate to http://localhost:5000 to access the web application.
-
-# 
-
-## Usage
-
-### Jupyter Notebook Visualization
-1. Open and run the Jupyter Notebook, which will guide you through the process of stock price prediction using LSTM models.
-2. Explore the step-by-step code cells to understand data collection, preprocessing, model training, and predictions.
-3. Observe the results through data tables and visual charts.
-
-### Flask Web Application Visualization
-1. Run the Flask application using the steps mentioned above.
-2. Access the web application through your web browser.
-3. Enter a stock ticker symbol and click "Predict" to view the predicted stock price.
-4. Observe the predicted price and a chart representing the predicted and actual prices.
+1. Clone the repository:
+```bash
+gh repo clone Deep4GB/Stock-Market-Predictor
+```
+2. Install Dependencies: Execute the following command to install all required libraries:
+```bash 
+pip install -r requirements.txt
+```
+3. Run the Application (Streamlit):
+```bash 
+streamlit run stock_predictor.py
+```
+4. Jupyter Notebook Usage:
+- Open and execute the Jupyter Notebooks (deep_learning.ipynb and machine_learning.ipynb) step by step or run all cells.
 
 #
 
+### **Deep Learning (LSTM)**:
+The deep_learning.ipynb notebook utilizes a Long Short-Term Memory (LSTM) neural network for stock price prediction. This notebook provides an in-depth exploration of the LSTM model's performance and its ability to predict stock prices effectively.
+#
+### **Machine Learning (Random Forest Regressor)**:
+In the machine_learning.ipynb notebook, a Random Forest Regressor, a machine learning technique, is utilized to predict stock prices. This notebook serves as a comparative analysis against the LSTM model, examining the Random Forest Regressor's performance in forecasting stock prices.
+
+# 
+### **Streamlit based application**:
+The stock_predictor.py script fetches historical stock data from Yahoo Finance, performs data preprocessing tasks like calculating Moving Averages (MA), and trains the Random Forest Regressor model. The Streamlit-based user interface enables users to input a stock symbol, specify date ranges, and visualize predictions along with other significant stock market indicators.
+
+# 
 ## Contribute
 
 Feel free to contribute to the project by opening issues, suggesting improvements, or creating pull requests. We hope you find this project informative and useful for exploring stock price prediction. Enjoy the visualizations!
