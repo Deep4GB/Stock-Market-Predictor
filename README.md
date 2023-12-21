@@ -48,10 +48,4 @@ The `stock_predictor.py` script fetches historical stock data from Yahoo Finance
 ## Contribute
 Contributions are welcome! Feel free to contribute by opening issues, suggesting improvements, or creating pull requests. We aim to make this project informative and useful for exploring stock price prediction. Your input is appreciated.
 
-### Team Members
-- Deep Patel
-- Dravya Patel
-- Sahil Patel
-
-
 <h3 align="center"> ━━━━━━ End of Document ━━━━━━ </h3>
