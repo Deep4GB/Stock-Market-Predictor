@@ -168,6 +168,30 @@
             }
         });
     </script>
+    <script>
+        const fetchCurrentPrice = async () => {
+            const symbolInput = document.getElementById('symbol');
+            const tickerSymbol = symbolInput.value;
+    
+            const response = await fetch(`/get_stock_price`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `tickerSymbol=${tickerSymbol}`,
+            });
+    
+            if (response.ok) {
+                const data = await response.json();
+                const currentPrice = parseFloat(data.currentPrice).toFixed(2);
+                // Pass the current price to the prediction page using URL parameters
+                window.location.href = `/predict?symbol=${tickerSymbol}&price=${currentPrice}`;
+            } else {
+                console.error('Failed to fetch current price');
+            }
+        };
+    </script>
+    
 </body>
 
 </html>

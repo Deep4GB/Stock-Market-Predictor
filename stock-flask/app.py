@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request
+import requests
+from flask import Flask, jsonify, render_template, request
 from datetime import datetime, timedelta
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
@@ -85,17 +86,45 @@ def predict_price(model, last_date, scaler, open_price, high_price, low_price, v
     return model.predict(input_data_scaled)[0]
 
 # Flask routes
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route('/stock')
 def stock():
     return render_template('stock.html')
 
+
+@app.route('/portfolio')
+def portfolio():
+    return render_template('portfolio.html')
+
+
+@app.route('/get_stock_price', methods=['POST'])
+def get_stock_price():
+    ticker_symbol = request.form['tickerSymbol']
+    stock = yf.Ticker(ticker_symbol)
+
+    try:
+        price_data = stock.history(period='1d')
+        if not price_data.empty:
+            # Get the latest closing price
+            current_price = price_data['Close'].iloc[-1]
+            return {'currentPrice': str(current_price)}
+        else:
+            return {'currentPrice': 'Failed to fetch current price'}
+    except Exception as e:
+        print(f"Error fetching stock price: {e}")
+        return {'currentPrice': 'Failed to fetch current price'}
+
+
 @app.route('/how-it-works')
 def how_it_works():
     return render_template('how-it-works.html')
+
 
 @app.route('/predict', methods=['GET', 'POST'])
 def prediction():
@@ -148,8 +177,10 @@ def prediction():
                     prediction_text = "Error occurred during prediction"
             else:
                 prediction_text = "Insufficient data for prediction"
+                symbol = request.args.get('symbol')
+                current_price = request.args.get('price')
 
-    return render_template('prediction.html', prediction_text=prediction_text, chart_data=chart_data)
+    return render_template('prediction.html', symbol=symbol, prediction_text=prediction_text, chart_data=chart_data)
 
 
 if __name__ == '__main__':
