@@ -4,55 +4,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">Stock Predictor</title>
+    <title>Stock Predictor Features</title>
     <!-- Include Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Font Awesome for icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- Include Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
-        #pageTitle {
-            text-align: center;
-            justify-items: center;
+        /* Base styles for light mode */
+        body {
+            background-color: #ffffff;
+            color: #333333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Define CSS for dark mode */
-        .dark-mode {
+        .feature-card {
+            background-color: #f7f7f7;
+            border: 1px solid #dddddd;
+            transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border-color: #cccccc;
+            transform: translateY(-2px);
+        }
+
+        /* Dark mode styles */
+        body.dark-mode {
             background-color: #1f2937;
-            color: white;
+            color: #ffffff;
         }
 
-        /* Styles for input fields in dark mode */
-        .dark-mode input[type="text"],
-        .dark-mode input[type="date"],
-        .dark-mode input[type="number"] {
+        body.dark-mode .feature-card {
             background-color: #374151;
-            color: white;
+            border: 1px solid #4a5568;
         }
 
-        /* Styles for input fields in light mode */
-        body:not(.dark-mode) input[type="text"],
-        body:not(.dark-mode) input[type="date"],
-        body:not(.dark-mode) input[type="number"] {
-            background-color: white;
-            color: #374151; /* Text color for light mode */
-            border: 1px solid #ccc8c8; /* Dark border color for light mode */
+        body.dark-mode .feature-card:hover {
+            box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.1), 0 2px 4px -1px rgba(255, 255, 255, 0.06);
+            border-color: #4a5568;
         }
 
-
-        /* Styles for the toggle button */
+        /* Toggle button styles */
         .toggle-button {
-            border: 1px solid #ccc;
+            border: 1px solid rgba(204, 204, 204, 0.358);
             padding: 3px;
             border-radius: 5px;
             cursor: pointer;
         }
 
-        /* Styles for icons */
         .fa-sun,
         .fa-moon {
             font-size: 24px;
             padding: 5px;
             transition: color 0.3s ease-in-out;
+        }
+
+        /* Additional styles for dark mode */
+        body:not(.dark-mode) input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(0);
+            transform: scaleY(1.2);
         }
 
         /* Responsive styles */
@@ -65,58 +78,65 @@
                 padding: 5px;
             }
         }
-
-        /* Styles for scrollable date input */
-        input[type="date"]::-webkit-calendar-picker-indicator {
-            filter: invert(1);
-            transform: scaleY(1.2);
-        }
-
-        body:not(.dark-mode) input[type="date"]::-webkit-calendar-picker-indicator {
-            filter: invert(0); /* Set to invert(0) for light mode */
-            transform: scaleY(1.2);
-        }
     </style>
 </head>
 
-<body class="flex flex-col min-h-screen bg-gray-200">
-    <div class="container mx-auto py-10">
+<body class="flex flex-col items-center justify-center min-h-screen">
+    <div class="container mx-auto py-10 mt-4">
         <!-- Dark Mode / Light Mode toggle button -->
         <div class="flex justify-end mb-4">
-            <button id="darkModeToggle" class="toggle-button focus:outline-none">
-                <i id="darkIcon" class="far fa-moon text-gray-500 hover:text-yellow-500"></i>
+            <button id="darkModeToggle" class="toggle-button focus:outline-none p-2">
+                <i id="darkIcon" class="far fa-moon text-gray-500 hover:text-yellow-500 text-sm"></i>
             </button>
         </div>
 
-        <h1 class="text-3xl font-semibold mb-4 text-center text-center mb-5">Stock Predictor</h1>
-        <form action="/predict" method="post" class="max-w-sm mx-auto">
-            <div class="mb-4">
-                <label for="symbol" class="block text-sm font-semibold mb-1 mt-10">Stock Symbol:</label>
-                <input type="text" name="symbol" id="symbol" placeholder="Enter Stock Symbol (e.g., AAPL)"
-                    class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500">
-            </div>
-            <div class="mb-4">
-                <label for="start_date" class="block text-sm font-semibold mb-1">Start Date:</label>
-                <input type="date" name="start_date" id="start_date"
-                    class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500" min="1980-01-01"
-                    value="1990-01-01">
-            </div>
+        <h1 class="text-3xl font-semibold mb-6 text-center">Stock Predictor Features</h1>
 
-            <div class="mb-4">
-                <label for="end_date" class="block text-sm font-semibold mb-1">End Date:</label>
-                <input type="date" name="end_date" id="end_date"
-                    class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500">
-            </div>
-            <div class="mb-4">
-                <label for="ma_window" class="block text-sm font-semibold mb-1">Moving Average Window:</label>
-                <input type="number" name="ma_window" id="ma_window" min="1" max="50" placeholder="1 - 50"
-                    class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500">
-            </div>
-            <div class="flex justify-center">
-                <button type="submit"
-                    class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 mt-2 rounded-md focus:outline-none">Predict</button>
-            </div>
-        </form>
+        <div class="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10 sm:mt-20 mr-4 ml-4">
+            <!-- Feature Card: Price Prediction -->
+            <a href="/stock"
+                class="feature-card border rounded-md p-6 flex flex-col items-center justify-center text-center animate__animated animate__fadeIn animate__faster transition duration-300 ease-in-out">
+                <i class="fas fa-chart-line text-3xl mb-3"></i>
+                <h2 class="text-lg font-semibold mb-3">Price Prediction</h2>
+                <p>Predict future stock prices based on historical data and machine learning algorithms.</p>
+            </a>
+
+            <!-- Feature Card: Sentiment Analysis -->
+            <a href="#"
+                class="feature-card border rounded-md p-6 flex flex-col items-center justify-center text-center animate__animated animate__fadeIn animate__faster transition duration-300 ease-in-out"
+                onclick="showPopup(event, 'sentiment-analysis')">
+                <i class="fas fa-comment-dots text-3xl mb-3"></i>
+                <h2 class="text-lg font-semibold mb-3">Sentiment Analysis</h2>
+                <p>Analyze market sentiment from news and social media for stocks.</p>
+            </a>
+
+            <!-- Feature Card: Portfolio Analysis & Optimization -->
+            <a href="#"
+                class="feature-card border rounded-md p-6 flex flex-col items-center justify-center text-center animate__animated animate__fadeIn animate__faster transition duration-300 ease-in-out"
+                onclick="showPopup(event, 'portfolio-analysis')">
+                <i class="fas fa-chart-pie text-3xl mb-3"></i>
+                <h2 class="text-lg font-semibold mb-3">Portfolio Analysis & Optimization</h2>
+                <p>Evaluate portfolio performance and optimize asset allocation.</p>
+            </a>
+
+            <!-- Feature Card: News & Social Media Integration -->
+            <a href="#"
+                class="feature-card border rounded-md p-6 flex flex-col items-center justify-center text-center animate__animated animate__fadeIn animate__faster transition duration-300 ease-in-out"
+                onclick="showPopup(event, 'news-social-media')">
+                <i class="fas fa-newspaper text-3xl mb-3"></i>
+                <h2 class="text-lg font-semibold mb-3">News & Social Media Integration</h2>
+                <p>Incorporate sentiment analysis from news and social media into stock predictions.</p>
+            </a>
+        </div>
+    </div>
+
+    <!-- Popup Modal -->
+    <div id="popupModal" class="fixed top-0 left-0 z-50 w-full h-full flex justify-center items-center hidden">
+        <div class="bg-gray-800 border border-gray-500 p-8 rounded-md text-white max-w-sm flex flex-col items-center">
+            <p class="mb-4">This feature is under development.</p>
+            <button onclick="hidePopup()"
+                class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md focus:outline-none">Close</button>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -129,8 +149,19 @@
         </div>
     </footer>
 
-
+    <!-- JavaScript to enable dark/light mode toggle -->
     <script>
+        // Function to show the popup modal
+        function showPopup(event, feature) {
+            event.preventDefault();
+            document.getElementById('popupModal').classList.remove('hidden');
+        }
+
+        // Function to hide the popup modal
+        function hidePopup() {
+            document.getElementById('popupModal').classList.add('hidden');
+        }
+
         const darkModeButton = document.getElementById('darkModeToggle');
         const darkIcon = document.getElementById('darkIcon');
         const body = document.body;
@@ -168,6 +199,7 @@
             }
         });
     </script>
+
 </body>
 
 </html>

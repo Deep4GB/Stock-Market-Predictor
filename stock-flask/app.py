@@ -89,6 +89,10 @@ def predict_price(model, last_date, scaler, open_price, high_price, low_price, v
 def index():
     return render_template('index.html')
 
+@app.route('/stock')
+def stock():
+    return render_template('stock.html')
+
 @app.route('/how-it-works')
 def how_it_works():
     return render_template('how-it-works.html')
@@ -147,9 +151,6 @@ def prediction():
 
     return render_template('prediction.html', prediction_text=prediction_text, chart_data=chart_data)
 
-
-if __name__ == '__main__':
-    app.run(debug=True)
 
 if __name__ == '__main__':
     app.run(debug=True)
