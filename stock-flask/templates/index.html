@@ -29,6 +29,16 @@
             color: white;
         }
 
+        /* Styles for input fields in light mode */
+        body:not(.dark-mode) input[type="text"],
+        body:not(.dark-mode) input[type="date"],
+        body:not(.dark-mode) input[type="number"] {
+            background-color: white;
+            color: #374151; /* Text color for light mode */
+            border: 1px solid #ccc8c8; /* Dark border color for light mode */
+        }
+
+
         /* Styles for the toggle button */
         .toggle-button {
             border: 1px solid #ccc;
@@ -59,6 +69,11 @@
         /* Styles for scrollable date input */
         input[type="date"]::-webkit-calendar-picker-indicator {
             filter: invert(1);
+            transform: scaleY(1.2);
+        }
+
+        body:not(.dark-mode) input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(0); /* Set to invert(0) for light mode */
             transform: scaleY(1.2);
         }
     </style>
