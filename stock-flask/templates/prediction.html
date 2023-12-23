@@ -56,7 +56,7 @@
             <p class="text-2xl font-semibold mb-4">{{ prediction_text }}</p>
             <!-- Render charts or other result data here -->
         </div>
-        <a href="/" id="darkModeToggle" class="text-blue-500 hover:underline back-home-button flex items-center justify-center space-x-2">
+        <a href="/" id="backHomeButton" class="text-blue-500 hover:underline back-home-button flex items-center justify-center space-x-2">
             <i id="arrowIcon" class="fas"></i>
             Back to Home
         </a>
@@ -66,23 +66,30 @@
         const body = document.body;
         const resultsPage = document.querySelector('.center-content');
 
-        // Check if dark mode is enabled and apply corresponding class
-        const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (isDarkMode) {
-            body.classList.add('dark-mode');
-            resultsPage.classList.add('dark-mode');
-        }
-
-        // Function to toggle dark mode
-        const toggleDarkMode = () => {
-            body.classList.toggle('dark-mode');
-            resultsPage.classList.toggle('dark-mode');
+        // Function to set the theme based on user preference
+        const setTheme = (mode) => {
+            if (mode === 'dark') {
+                body.classList.add('dark-mode');
+                resultsPage.classList.add('dark-mode');
+            } else {
+                body.classList.remove('dark-mode');
+                resultsPage.classList.remove('dark-mode');
+            }
         };
 
-        // Event listener for clicking the dark mode switch
-        const darkModeSwitch = document.getElementById('darkModeToggle');
-        if (darkModeSwitch) {
-            darkModeSwitch.addEventListener('click', toggleDarkMode);
+        // Check if the user's preference is already set in localStorage
+        const userPreference = localStorage.getItem('theme');
+        if (userPreference) {
+            setTheme(userPreference);
+        }
+
+        // Event listener for clicking the back home button
+        const backHomeButton = document.getElementById('backHomeButton');
+        if (backHomeButton) {
+            backHomeButton.addEventListener('click', () => {
+                // Navigate back to the index page
+                window.location.href = '/';
+            });
         }
 
         // Get the prediction text

@@ -64,7 +64,7 @@
     </style>
 </head>
 
-<body class="bg-gray-200">
+<body class="flex flex-col min-h-screen bg-gray-200">
     <div class="container mx-auto py-10">
         <!-- Dark Mode / Light Mode toggle button -->
         <div class="flex justify-end mb-4">
@@ -73,18 +73,20 @@
             </button>
         </div>
 
-        <h1 class="text-3xl font-semibold mb-4 text-center sm:text-left">Stock Predictor</h1>
+        <h1 class="text-3xl font-semibold mb-4 text-center text-center mb-5">Stock Predictor</h1>
         <form action="/predict" method="post" class="max-w-sm mx-auto">
             <div class="mb-4">
-                <label for="symbol" class="block text-sm font-semibold mb-1">Stock Symbol:</label>
+                <label for="symbol" class="block text-sm font-semibold mb-1 mt-10">Stock Symbol:</label>
                 <input type="text" name="symbol" id="symbol" placeholder="Enter Stock Symbol (e.g., AAPL)"
                     class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500">
             </div>
             <div class="mb-4">
                 <label for="start_date" class="block text-sm font-semibold mb-1">Start Date:</label>
-                <input type="date" name="start_date" id="start_date" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500" min="1980-01-01" value="1990-01-01">
+                <input type="date" name="start_date" id="start_date"
+                    class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500" min="1980-01-01"
+                    value="1990-01-01">
             </div>
-            
+
             <div class="mb-4">
                 <label for="end_date" class="block text-sm font-semibold mb-1">End Date:</label>
                 <input type="date" name="end_date" id="end_date"
@@ -95,22 +97,60 @@
                 <input type="number" name="ma_window" id="ma_window" min="1" max="50" placeholder="1 - 50"
                     class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500">
             </div>
-            <button type="submit"
-                class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md focus:outline-none">Predict</button>
+            <div class="flex justify-center">
+                <button type="submit"
+                    class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 mt-2 rounded-md focus:outline-none">Predict</button>
+            </div>
         </form>
     </div>
+
+    <!-- Footer -->
+    <footer class="bg-transparent py-4 mt-auto">
+        <div class="container mx-auto text-center">
+            <a href="https://deeppatel.tech" target="_blank" class="text-gray-600">Built by Deep Patel</a>
+            <p class="text-gray-600">
+                <a href="/how-it-works" class="text-blue-500 hover:underline">Learn how it works</a>
+            </p>
+        </div>
+    </footer>
+
 
     <script>
         const darkModeButton = document.getElementById('darkModeToggle');
         const darkIcon = document.getElementById('darkIcon');
         const body = document.body;
 
+        // Function to set the theme based on user preference
+        const setTheme = (mode) => {
+            if (mode === 'dark') {
+                body.classList.add('dark-mode');
+                darkIcon.classList.add('fa-sun', 'text-yellow-500');
+                darkIcon.classList.remove('fa-moon', 'text-gray-500');
+            } else {
+                body.classList.remove('dark-mode');
+                darkIcon.classList.add('fa-moon', 'text-gray-500');
+                darkIcon.classList.remove('fa-sun', 'text-yellow-500');
+            }
+        };
+
+        // Check if the user's preference is already set in localStorage
+        const userPreference = localStorage.getItem('theme');
+        if (userPreference) {
+            setTheme(userPreference);
+        }
+
         darkModeButton.addEventListener('click', () => {
+            // Toggle dark mode and store the user's preference in localStorage
             body.classList.toggle('dark-mode');
-            darkIcon.classList.toggle('fa-moon');
-            darkIcon.classList.toggle('fa-sun');
-            darkIcon.classList.toggle('text-gray-500');
-            darkIcon.classList.toggle('text-yellow-500');
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                darkIcon.classList.add('fa-sun', 'text-yellow-500');
+                darkIcon.classList.remove('fa-moon', 'text-gray-500');
+            } else {
+                localStorage.setItem('theme', 'light');
+                darkIcon.classList.remove('fa-sun', 'text-yellow-500');
+                darkIcon.classList.add('fa-moon', 'text-gray-500');
+            }
         });
     </script>
 </body>
